@@ -1,21 +1,39 @@
 const express = require('express');
-const app = express();
-const port = 3000;
-const signupLoginRoutes = require("./routes/signupLogin");
-const users = require('./routes/users');
+const session = require("express-session");
 require("dotenv").config();
 const db = require('./db');
+
+const app = express();
+
+// ---------- Middleware ----------
 app.use(express.json());
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || "devofdev_secret_key",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: false,          // set TRUE when you host with HTTPS
+    maxAge: 1000 * 60 * 60  // 1 hr
+  }
+}));
+
+// ---------- Routes ----------
+const signupLoginRoutes = require("./routes/signupLogin");
+const users = require('./routes/users');
 
 app.use('/users', users);
 app.use('/', signupLoginRoutes);
 
+// ---------- Root ----------
 app.get('/', (req, res) => {
-  res.send('Hello World!')
-  const newUser = new User(req.body);
-    db.addListener
+  res.send('DevofDev Backend Running');
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${process.env.PORT || 3000}`)
+// ---------- Start Server ----------
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
