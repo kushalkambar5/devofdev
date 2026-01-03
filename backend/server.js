@@ -2,11 +2,14 @@ const express = require('express');
 const session = require("express-session");
 require("dotenv").config();
 const db = require('./db');
+const cors = require('cors');
 
 const app = express();
 
+
 // ---------- Middleware ----------
 app.use(express.json());
+app.use(cors());
 
 app.use(session({
   secret: process.env.SESSION_SECRET || "devofdev_secret_key",

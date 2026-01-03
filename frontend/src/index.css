@@ -1,1 +1,102 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+:root {
+  /* Common */
+  --transition-base: all 0.3s ease-in-out;
+
+  /* Light Mode (Apple Glass) */
+  --bg-primary: #f5f5f7;
+  --text-primary: #1d1d1f;
+  --text-secondary: #86868b;
+  --accent-color: #0071e3;
+
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  --glass-blur: 20px;
+}
+
+.dark {
+  /* Dark Mode (Cyberpunk Neon Glass) */
+  --bg-primary: #030014;
+  /* Deep space blue/black */
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+
+  /* Cyber Accents */
+  --accent-color: #00f0ff;
+  /* Neon Cyan */
+  --accent-glow: rgba(0, 240, 255, 0.5);
+
+  --glass-bg: rgba(10, 10, 20, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  /* Faint white border */
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  transition: background-color 0.5s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-hover {
+  transition: var(--transition-base);
+}
+
+.glass-hover:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Text Gradients */
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #00f0ff, #7000ff);
+}
+
+.light .text-gradient {
+  background-image: linear-gradient(to right, #0071e3, #00c6fb);
+}
+
+/* Animations */
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.3;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.delay-1000 {
+  animation-delay: 1000ms;
+}
